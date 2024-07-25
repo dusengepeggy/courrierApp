@@ -7,6 +7,7 @@ import Manifier from '../pages/manifier';
 import Sendcourrier from '../pages/sendcourrier';
 import TabBar from '../components/TabBar';
 import Profile from '../pages/profile/Profile';
+import ReceiverTopNav from './receiveTabnav';
 
 const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -24,7 +25,7 @@ export default function Bottomnavigation() {
         />
         <Screen
           name="Recieve"
-          component={Recieve}
+          component={ReceiverTopNav}
           options={{ title: 'Recieve' }}
         />
         <Screen
