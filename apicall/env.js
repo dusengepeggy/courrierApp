@@ -1,0 +1,1 @@
+export const apiUrl = 'http://3.71.16.103:8003/api/'
