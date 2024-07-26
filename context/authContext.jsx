@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { CourrierEnum } from '../apicall/enum';
-import { postData } from '../apicall/requestController';
+import { getData, postData } from '../apicall/requestController';
 
 export const AuthContext = createContext();
 

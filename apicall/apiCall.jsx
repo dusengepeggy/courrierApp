@@ -3,11 +3,12 @@ import * as SecureStore from 'expo-secure-store';
 import { CourrierEnum } from './enum';
 import { getDataFromStorage } from './localStorageFunction';
 import { apiUrl } from './env';
+SecureStore.getItemAsync
 
 const getToken = async () => {
   try {
-    const token = await getDataFromStorage(CourrierEnum.USERTOKEN);
-    return token || '';
+    const token = await  SecureStore.getItemAsync(CourrierEnum.USERTOKEN);
+    return token;
   } catch (error) {
     console.error('Error getting token', error);
     return '';
@@ -21,6 +22,7 @@ const api = axios.create({
 api.interceptors.request.use(
   async function (config) {
     const token = await getToken();
+    console.log(token,'asdada');
     // Add headers
     config.headers = {
       ...config.headers, 
