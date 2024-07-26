@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, SafeAreaView, Text, Image } from 'react-native';
 import { TouchableRipple } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { AntDesign } from '@expo/vector-icons';
 import tailwind from 'twrnc';
+import { AuthContext } from '../../context/authContext';
 
 const Profile = () => {
+  const {logout } = useContext(AuthContext);
+  
   return (
     <SafeAreaView style={tailwind`flex-1 bg-white`}>
       <View style={tailwind`px-6 mt-8  mb-6`}>
@@ -67,7 +70,7 @@ const Profile = () => {
             <Text style={tailwind`text-gray-500 ml-5 text-lg font-semibold`}>Settings</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={logout}>
           <View style={tailwind`flex-row py-4 px-8`}>
             <AntDesign name="logout" color="#EF444E" size={25} />
             <Text style={tailwind`text-[#EF444E] ml-5 text-lg font-semibold`}>Log out</Text>

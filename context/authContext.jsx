@@ -1,5 +1,4 @@
-// AuthContext.js
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import { CourrierEnum } from '../apicall/enum';
 import { postData } from '../apicall/requestController';
@@ -8,31 +7,22 @@ export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
   const [userToken, setUserToken] = useState(null);
-  const [log,setLog] = useState(false);
-
-  useEffect(() => {
-    const loadToken = async () => {
-      const token = await SecureStore.getItemAsync(CourrierEnum.USERTOKEN);
-      if (token) {
-        setLog(true);
-        setUserToken(token);
-      }
-    };
-    loadToken();
-  }, []);
+  const [log, setLog] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const login = async (data) => {
-      try{
-        const response = await postData('login/',data)
-        setUserToken(response.access);
-        await SecureStore.setItemAsync(CourrierEnum.USERTOKEN, response.access);
-        setLog(true)
-      }catch(err){
-        setLog(false)
-        console.error('Error logging in')
-      }finally{
-        setLog(false)
-      }
+    try {
+      const response = await postData('login/', data);
+      setUserToken(response.access);
+      await SecureStore.setItemAsync(CourrierEnum.USERTOKEN, response.access);
+      setLog(true);
+      setErrorMessage(''); // Clear error message on successful login
+    } catch (err) {
+      setLog(false);
+      setErrorMessage('Error logging in. Please try again.');
+    } finally {
+      setLog(false);
+    }
   };
 
   const logout = async () => {
@@ -42,7 +32,7 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userToken, login, logout,log }}>
+    <AuthContext.Provider value={{ userToken, login, logout, log, setLog, errorMessage, setErrorMessage }}>
       {children}
     </AuthContext.Provider>
   );
