@@ -22,7 +22,6 @@ export const getData = async (pathname) => {
     }
 }
 
-
 export const putData = async (data,pathname) => {
     try{
         const response = await api.put(pathname,data)
